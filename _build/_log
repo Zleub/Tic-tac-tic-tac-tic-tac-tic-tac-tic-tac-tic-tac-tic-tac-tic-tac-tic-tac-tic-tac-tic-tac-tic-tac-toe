@@ -1,0 +1,20 @@
+### Starting build.
+# Target: main.ml.depends, tags: { extension:ml, file:main.ml, ocaml, ocamldep, quiet }
+/Volumes/Data/nfs/zfs-student-6/users/2013/adebray/.brew/bin/ocamldep.opt -modules main.ml > main.ml.depends # cached
+# Target: modules/Game.ml.depends, tags: { extension:ml, file:modules/Game.ml, ocaml, ocamldep, quiet }
+/Volumes/Data/nfs/zfs-student-6/users/2013/adebray/.brew/bin/ocamldep.opt -modules modules/Game.ml > modules/Game.ml.depends # cached
+# Target: modules/Case.ml.depends, tags: { extension:ml, file:modules/Case.ml, ocaml, ocamldep, quiet }
+/Volumes/Data/nfs/zfs-student-6/users/2013/adebray/.brew/bin/ocamldep.opt -modules modules/Case.ml > modules/Case.ml.depends # cached
+# Target: modules/Grid.ml.depends, tags: { extension:ml, file:modules/Grid.ml, ocaml, ocamldep, quiet }
+/Volumes/Data/nfs/zfs-student-6/users/2013/adebray/.brew/bin/ocamldep.opt -modules modules/Grid.ml > modules/Grid.ml.depends # cached
+# Target: modules/Grid.cmo, tags: { byte, compile, extension:cmo, extension:ml, file:modules/Grid.cmo, file:modules/Grid.ml, implem, ocaml, quiet }
+/Volumes/Data/nfs/zfs-student-6/users/2013/adebray/.brew/bin/ocamlc.opt -c -I modules -o modules/Grid.cmo modules/Grid.ml # cached
+# Target: modules/Case.cmo, tags: { byte, compile, extension:cmo, extension:ml, file:modules/Case.cmo, file:modules/Case.ml, implem, ocaml, quiet }
+/Volumes/Data/nfs/zfs-student-6/users/2013/adebray/.brew/bin/ocamlc.opt -c -I modules -o modules/Case.cmo modules/Case.ml # cached
+# Target: modules/Game.cmo, tags: { byte, compile, extension:cmo, extension:ml, file:modules/Game.cmo, file:modules/Game.ml, implem, ocaml, quiet }
+/Volumes/Data/nfs/zfs-student-6/users/2013/adebray/.brew/bin/ocamlc.opt -c -I modules -o modules/Game.cmo modules/Game.ml # cached
+# Target: main.cmo, tags: { byte, compile, extension:cmo, extension:ml, file:main.cmo, file:main.ml, implem, ocaml, quiet }
+/Volumes/Data/nfs/zfs-student-6/users/2013/adebray/.brew/bin/ocamlc.opt -c -I modules -o main.cmo main.ml # cached
+# Target: main.byte, tags: { byte, dont_link_with, extension:byte, file:main.byte, link, ocaml, program, quiet }
+/Volumes/Data/nfs/zfs-student-6/users/2013/adebray/.brew/bin/ocamlc.opt modules/Grid.cmo modules/Case.cmo modules/Game.cmo main.cmo -o main.byte
+# Compilation successful.
