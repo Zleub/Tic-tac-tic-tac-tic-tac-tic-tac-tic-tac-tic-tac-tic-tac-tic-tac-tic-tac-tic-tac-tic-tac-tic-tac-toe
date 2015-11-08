@@ -2,7 +2,7 @@
 * @Author: adebray
 * @Date:   2015-11-08 05:14:11
 * @Last Modified by:   adebray
-* @Last Modified time: 2015-11-08 21:49:05
+* @Last Modified time: 2015-11-08 22:00:40
 *)
 
 let convert = function
@@ -46,7 +46,11 @@ let rec get_line grid =
 			ret
 
 let rec loop ?(cmp=0) grid =
-	let final = function
+	let graphic = function
+		| Grid.Cell.Red -> "Red won"
+		| Grid.Cell.Blue -> "Blue won"
+		| Grid.Cell.Undefined -> "Keep Playing"
+	in let final = function
 		| Grid.Cell.Red -> true
 		| Grid.Cell.Blue -> true
 		| Grid.Cell.Undefined -> false
@@ -60,7 +64,7 @@ let rec loop ?(cmp=0) grid =
 	in
 		print_endline (Grid.stringGrid grid) ;
 		print_endline "--------------------------------------------------------" ;
-		print_endline ( string_of_bool ( final (check_every_cell grid))) ;
+		print_endline ( "Game State : " ^ graphic( check_every_cell grid)) ;
 		print_endline "--------------------------------------------------------" ;
 		if final (check_every_cell grid) then ()
 		else if (cmp mod 2) = 0 then loop ~cmp:(cmp + 1) (play (get_line grid) Grid.Cell.Red)
