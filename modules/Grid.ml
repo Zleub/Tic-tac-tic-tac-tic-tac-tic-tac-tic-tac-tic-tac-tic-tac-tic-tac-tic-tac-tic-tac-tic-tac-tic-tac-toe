@@ -2,7 +2,7 @@
 * @Author: adebray
 * @Date:   2015-11-08 01:01:00
 * @Last Modified by:   adebray
-* @Last Modified time: 2015-11-08 04:38:17
+* @Last Modified time: 2015-11-08 06:54:50
 *)
 
 module Cell =
@@ -21,7 +21,7 @@ let size = 3
 
 let play state index grid =
 	let assign x = function
-		| i when i = index - 1 -> state
+		| i when i = index -> state
 		| _ -> x
 	in List.mapi (fun i x -> assign x i ) grid
 
