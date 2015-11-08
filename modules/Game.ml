@@ -2,7 +2,7 @@
 * @Author: adebray
 * @Date:   2015-11-08 05:14:11
 * @Last Modified by:   adebray
-* @Last Modified time: 2015-11-08 20:12:46
+* @Last Modified time: 2015-11-08 21:49:05
 *)
 
 let convert = function
@@ -17,7 +17,7 @@ let convert = function
 	| '9' -> 9
 	| _ -> 42
 
-let rec get_line () =
+let rec get_line grid =
 	let query () =
 		print_endline "It's your turn ! Which case do you want to populate ?" ;
 		read_line ()
@@ -30,42 +30,38 @@ let rec get_line () =
 	in
 		if (fst ret) = 42 || (snd ret) = 42 then begin
 			print_endline "Invalid input ! (expecting \"x y\")" ;
-			get_line ()
-		end (* end else if  then *)
+			get_line grid
+		end
+		else if List.nth grid (((fst ret) - 1) * 9 + ((snd ret) - 1)) <> Grid.Cell.Undefined then
+			begin
+			print_endline "Already full !" ;
+			get_line grid
+			end
+		else if Case.isTicTac (Case.getCase ((fst ret) - 1) grid) <> Grid.Cell.Undefined then
+			begin
+			print_endline "Already won !" ;
+			get_line grid
+			end
 		else
 			ret
 
-(*
-	[a] [b] [c]
-	[d] [e] [f]
-	[g] [h] [i]
- *)
-
 let rec loop ?(cmp=0) grid =
-	let check_victory = function
-		| a::b::c::d::e::f::g::h::i::[] when a = b = c -> true
-		| a::b::c::d::e::f::g::h::i::[] when a = d = g -> true
-		| a::b::c::d::e::f::g::h::i::[] when a = e = i -> true
-		| a::b::c::d::e::f::g::h::i::[] when c = f = i -> true
-		| a::b::c::d::e::f::g::h::i::[] when c = e = g -> true
-		| a::b::c::d::e::f::g::h::i::[] when g = h = i -> true
-		| a::b::c::d::e::f::g::h::i::[] when d = e = f -> true
-		| a::b::c::d::e::f::g::h::i::[] when b = e = h -> true
-		| _ -> false
+	let final = function
+		| Grid.Cell.Red -> true
+		| Grid.Cell.Blue -> true
+		| Grid.Cell.Undefined -> false
 	in let rec check_every_cell ?(cmp=0) ?(acc=[]) grid =
 		if cmp < 9 then
-			let b = Case.isTicTac (Case.getCase cmp grid)
-			in check_every_cell ~cmp:(cmp + 1) ~acc:(acc @ [b]) grid
-		else acc
+			let l = Case.isTicTac (Case.getCase cmp grid)
+			in check_every_cell ~cmp:(cmp + 1) ~acc:(acc @ [l]) grid
+		else Case.isTicTac acc
 	in let play coord player =
 		Grid.play player (((fst coord) - 1) * 9 + ((snd coord) - 1)) grid
 	in
 		print_endline (Grid.stringGrid grid) ;
-		Case.printCase (Case.getCase 0 grid);
-		Case.printCase (Case.getCase 2 grid);
 		print_endline "--------------------------------------------------------" ;
-		print_endline ( string_of_bool (check_victory (check_every_cell grid))) ;
+		print_endline ( string_of_bool ( final (check_every_cell grid))) ;
 		print_endline "--------------------------------------------------------" ;
-		if check_victory (check_every_cell grid) then ()
-		else if (cmp mod 2) = 0 then loop ~cmp:(cmp + 1) (play (get_line ()) Grid.Cell.Red)
-		else loop ~cmp:(cmp + 1) (play (get_line ()) Grid.Cell.Blue)
+		if final (check_every_cell grid) then ()
+		else if (cmp mod 2) = 0 then loop ~cmp:(cmp + 1) (play (get_line grid) Grid.Cell.Red)
+		else loop ~cmp:(cmp + 1) (play (get_line grid) Grid.Cell.Blue)

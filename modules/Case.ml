@@ -2,7 +2,7 @@
 * @Author: Work
 * @Date:   2015-11-08 05:39:44
 * @Last Modified by:   adebray
-* @Last Modified time: 2015-11-08 20:03:16
+* @Last Modified time: 2015-11-08 21:27:52
 *)
 
 type t = Grid.Cell.state list
@@ -81,28 +81,39 @@ let rec hasLine case state = match case with
 
 let hasColumn case state = match case with
 	| case1::case2::case3::case4::case5::case6::case7::case8::case9::tail	->
-		if
-			(case1 = state && case4 = state && case7 = state)
+		(case1 = state && case4 = state && case7 = state)
 			|| (case2 = state && case5 = state && case8 = state)
-			|| (case3 = state && case6 = state && case9 = state) then
-			true
-		else
-			false
+			|| (case3 = state && case6 = state && case9 = state)
 	| []	-> false
 	| _::_	-> invalid_arg "Invalid arg for hasColumn"
 
 let isRed case =
-	(hasDiagonal case Grid.Cell.Red)
+	if ((hasDiagonal case Grid.Cell.Red)
 		|| (hasLine case Grid.Cell.Red)
-		|| (hasColumn case Grid.Cell.Red)
+		|| (hasColumn case Grid.Cell.Red))
+	then Grid.Cell.Red
+	else Grid.Cell.Undefined
 
 let isBlue case =
-	(hasDiagonal case Grid.Cell.Blue)
+	if ((hasDiagonal case Grid.Cell.Blue)
 		|| (hasLine case Grid.Cell.Blue)
-		|| (hasColumn case Grid.Cell.Blue)
+		|| (hasColumn case Grid.Cell.Blue))
+	then Grid.Cell.Blue
+	else Grid.Cell.Undefined
+
+let resolve tictacList =
+	((hasDiagonal tictacList Grid.Cell.Blue)
+		|| (hasLine tictacList Grid.Cell.Blue)
+		|| (hasColumn tictacList Grid.Cell.Blue))
+	||
+	((hasDiagonal tictacList Grid.Cell.Red)
+		|| (hasLine tictacList Grid.Cell.Red)
+		|| (hasColumn tictacList Grid.Cell.Red))
 
 let isTicTac case =
-	isBlue case || isRed case
+	if isBlue case = Grid.Cell.Blue then Grid.Cell.Blue
+	else if isRed case = Grid.Cell.Red then Grid.Cell.Red
+	else Grid.Cell.Undefined
 
 let printCase case =
 	print_endline (stringRow case 0) ;
