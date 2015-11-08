@@ -1,8 +1,8 @@
 (*
 * @Author: adebray
 * @Date:   2015-11-08 01:01:00
-* @Last Modified by:   Work
-* @Last Modified time: 2015-11-08 11:40:01
+* @Last Modified by:   adebray
+* @Last Modified time: 2015-11-08 14:25:05
 *)
 
 module Cell =
@@ -34,7 +34,9 @@ let newGrid () =
 
 let rec printGrid g =
 	let stringify = function x -> print_string (Cell.stringState x)
-	in let rec loop ?(acc=3) ?(start=0) ?(index=0) f grid= match acc, index with
+	in let rec loop ?(acc=3) ?(start=0) ?(index=0) f grid=
+		print_int index;
+		match acc, index with
 		| acc, index when acc <> 0 -> begin
 			print_string ((Cell.stringState (List.nth grid index)) ^ " ") ;
 			loop ~acc:(acc - 1) ~start:(start) ~index:(index + 1) f grid

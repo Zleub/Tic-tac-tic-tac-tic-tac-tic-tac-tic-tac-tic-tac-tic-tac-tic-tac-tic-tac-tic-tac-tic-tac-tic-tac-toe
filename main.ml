@@ -1,8 +1,8 @@
 (*
 * @Author: adebray
 * @Date:   2015-11-08 01:00:50
-* @Last Modified by:   Work
-* @Last Modified time: 2015-11-08 12:10:09
+* @Last Modified by:   adebray
+* @Last Modified time: 2015-11-08 14:18:21
 * @Last Modified by:   adebray
 * @Last Modified time: 2015-11-08 06:55:09
 *)
@@ -33,7 +33,7 @@
 let () =
 	let g = Grid.newGrid ()
 
-	in let gDiag1	= Grid.play Grid.Cell.Red 0 (Grid.play Grid.Cell.Red 4 (Grid.play Grid.Cell.Red 8 g))
+(* 	in let gDiag1	= Grid.play Grid.Cell.Red 0 (Grid.play Grid.Cell.Red 4 (Grid.play Grid.Cell.Red 8 g))
 	in let gDiag2	= Grid.play Grid.Cell.Red 2 (Grid.play Grid.Cell.Red 4 (Grid.play Grid.Cell.Red 6 g))
 	in let gRow1	= Grid.play Grid.Cell.Red 0 (Grid.play Grid.Cell.Red 1 (Grid.play Grid.Cell.Red 2 g))
 	in let gRow2	= Grid.play Grid.Cell.Red 3 (Grid.play Grid.Cell.Red 4 (Grid.play Grid.Cell.Red 5 g))
@@ -79,5 +79,5 @@ let () =
 		print_endline ("Is this a win ? " ^ string_of_bool (Case.isRed column3) ^ "\n") ;
 
 		Case.printCase ticTac ;
-		print_endline ("Is this a tictac ? " ^ string_of_bool (Case.isTicTac ticTac))
-		(* Game.loop g *)
+		print_endline ("Is this a tictac ? " ^ string_of_bool (Case.isTicTac ticTac)) ; *)
+		in Game.loop g
