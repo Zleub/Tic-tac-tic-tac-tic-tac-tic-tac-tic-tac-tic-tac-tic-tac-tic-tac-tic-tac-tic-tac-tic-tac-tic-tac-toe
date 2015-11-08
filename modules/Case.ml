@@ -2,7 +2,7 @@
 * @Author: Work
 * @Date:   2015-11-08 05:39:44
 * @Last Modified by:   Work
-* @Last Modified time: 2015-11-08 10:30:02
+* @Last Modified time: 2015-11-08 12:05:38
 *)
 
 type t = Grid.Cell.state list
@@ -57,9 +57,9 @@ in
 
 let getCellState case index =
 	let rec loop i currentCell = match i, currentCell with
-		| i, head::tail when i = index	-> currentCell
+		| i, head::tail when i = index	-> head
 		| _, head::tail -> loop (i + 1) tail
-		| _, []			-> "Invalid argument for getCellState"
+		| _, []			-> invalid_arg "Invalid argument for getCellState"
 	in
 		loop 0 case
 
@@ -75,13 +75,14 @@ in
 	else if upRightCell = state && downLeftCell = state then true
 	else false
 
-let hasLine case state = match case with
+let rec hasLine case state = match case with
 	| case1::case2::case3::tail	->
 		if case1 = state && case2 = state && case3 = state then
 			true
 		else
 			hasLine tail state
-	| [] -> false
+	| []	-> false
+	| _::_ -> invalid_arg "Invalid arg for hasLine"
 
 let hasColumn case state = match case with
 	| case1::case2::case3::case4::case5::case6::case7::case8::case9::tail	->
@@ -92,7 +93,8 @@ let hasColumn case state = match case with
 			true
 		else
 			false
-	| [] -> false
+	| []	-> false
+	| _::_	-> invalid_arg "Invalid arg for hasColumn"
 
 let isRed case =
 	if
@@ -104,7 +106,7 @@ let isRed case =
 	else
 		false
 
-let isBlue =
+let isBlue case =
 	if
 		(hasDiagonal case Grid.Cell.Red) = true
 		|| (hasLine case Grid.Cell.Red) = true
@@ -115,20 +117,10 @@ let isBlue =
 		false
 
 let isTicTac case =
-	if isBlue case = true || isRed case = true then true
-	else false
+	if isBlue case = true || isRed case = true then false
+	else true
 
 let printCase case =
-	let rec loop i currentCase = match currentCase with
-		| [] 			-> print_endline "" ; ()
-		| head::tail	->
-						if i = 0 then begin
-							print_string (Grid.Cell.stringState head)
-						end else if i mod 3 = 0 then begin
-							print_endline "" ;
-							print_string (Grid.Cell.stringState head)
-						end else
-							print_string (Grid.Cell.stringState head) ;
-						loop (i + 1) tail
-	in
-		loop 0 case
+	print_endline (stringRow case 0) ;
+	print_endline (stringRow case 1) ;
+	print_endline (stringRow case 2)
