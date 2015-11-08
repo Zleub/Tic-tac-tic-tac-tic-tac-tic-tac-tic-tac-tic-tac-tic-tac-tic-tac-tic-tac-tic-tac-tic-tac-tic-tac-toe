@@ -1,8 +1,8 @@
 (*
 * @Author: adebray
 * @Date:   2015-11-08 01:01:00
-* @Last Modified by:   adebray
-* @Last Modified time: 2015-11-08 04:38:17
+* @Last Modified by:   Work
+* @Last Modified time: 2015-11-08 05:40:19
 *)
 
 module Cell =
@@ -52,5 +52,3 @@ let rec printGrid g =
 				else loop ~acc:(3) ~start:(start) ~index:(index + 6) f grid
 			end
 	in loop stringify g
-
-
