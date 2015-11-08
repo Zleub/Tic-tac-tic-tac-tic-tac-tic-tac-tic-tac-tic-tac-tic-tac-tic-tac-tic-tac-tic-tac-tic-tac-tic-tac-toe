@@ -2,7 +2,7 @@
 * @Author: Work
 * @Date:   2015-11-08 05:39:44
 * @Last Modified by:   Work
-* @Last Modified time: 2015-11-08 07:13:39
+* @Last Modified time: 2015-11-08 10:30:02
 *)
 
 type t = Grid.Cell.state list
@@ -95,28 +95,28 @@ let hasColumn case state = match case with
 	| [] -> false
 
 let isRed case =
-	if (hasDiagonal Grid.Cell.Red)
+	if
+		(hasDiagonal case Grid.Cell.Red) = true
+		|| (hasLine case Grid.Cell.Red) = true
+		|| (hasColumn case Grid.Cell.Red) = true
+	then
+		true
+	else
+		false
 
 let isBlue =
-	let rec loop = function
-		| []			-> true
-		| head::tail	->
-							if head != Grid.Cell.Blue then false
-							else
-								loop tail
-	in
-	loop
+	if
+		(hasDiagonal case Grid.Cell.Red) = true
+		|| (hasLine case Grid.Cell.Red) = true
+		|| (hasColumn case Grid.Cell.Red) = true
+	then
+		true
+	else
+		false
 
-let isTicTac =
-	let rec loop flag = function
-		| []			-> flag
-		| head::tail	->
-							if head = Grid.Cell.Undefined then
-								loop true tail
-							else
-								loop flag tail
-	in
-	loop false
+let isTicTac case =
+	if isBlue case = true || isRed case = true then true
+	else false
 
 let printCase case =
 	let rec loop i currentCase = match currentCase with
